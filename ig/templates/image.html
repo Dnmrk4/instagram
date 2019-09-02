@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container top">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{image.photo.url}}" height="150px" alt="Image">
+            <a href="{% url 'profile' username=image.profile.username %}">{{image.profile.username}}</a>
+            <h5>{{image.image_caption}} </h5>
+            <h4 > {{comments|length}} comments </h4>
+            <hr>
+            <h4 >Comments</h4>
+            <div class="comments">
+                {% for comment in comments %}
+                <div class="row">
+                    <div class="col-md-6">
+                        
+                        <ul class="list-inline home-list">
+                            <li class="list-inline-item">
+                                <a href="{% url 'profile' username=comment.user.username %}">{{comment.user.username}}</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <p>{{comment.comment}} </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>There are no comments</h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form action="{% url 'image' image_id=image.id %}" method="POST">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" class="btn btn-success" value="Comment">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
