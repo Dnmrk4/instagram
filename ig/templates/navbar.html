@@ -24,6 +24,7 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="{% url 'profile' username=user %}">Profile</a>
+          <a class="dropdown-item" href="{% url 'upload_image' %}">Upload image</a>
           <a class="dropdown-item" href="/logout">Log Out</a>
           {% else %}
           <a class="dropdown-item" href="/accounts/login">Log in</a>
