@@ -2,35 +2,37 @@
 {% block content %}
 <div class="container">
     <br>
-    <div class="row">
-        {% for image in images %}
-        <div class="col-md-7">
-            <!-- Card Narrower -->
-            <div class="card card-cascade narrower">
-                <!-- Card image -->
-                <div class="view view-cascade overlay">
-                    <img class="card-img-top" src="{{image.photo.url}}" alt="Card image cap">
-                    <a>
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                </div> <!-- Card content -->
-                <div class="card-body card-body-cascade">
-                    <!-- Label -->
-                    <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i>{{image.image_name}}</h5>
-                    <!-- Title -->
-                    <h4 class="font-weight-bold card-title"></h4>
-                    <!-- Text -->
-                    <h3>{{image.image_caption}}</h3>
-                </div>
-                <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
-                    <ul class="list-unstyled list-inline font-small">
-                        <li class="list-inline-item pr-2"><a href="{% url 'image' image_id=image.id %}"
-                                class="white-text"><i class="far fa-comments pr-1"></i>Comments</a></li>
-                    </ul>
-                </div>
-            </div><br>
-        </div>{% endfor %}
-    </div>
+    <center>
+        <div class="row">
+            {% for image in images %}
+            <div class="col-md-7">
+                <!-- Card Narrower -->
+                <div class="card card-cascade narrower">
+                    <!-- Card image -->
+                    <div class="view view-cascade overlay">
+                        <img class="card-img-top" src="{{image.photo.url}}" alt="Card image cap">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div> <!-- Card content -->
+                    <div class="card-body card-body-cascade">
+                        <!-- Label -->
+                        <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i>{{image.image_name}}</h5>
+                        <!-- Title -->
+                        <h4 class="font-weight-bold card-title"></h4>
+                        <!-- Text -->
+                        <h3>{{image.image_caption}}</h3>
+                    </div>
+                    <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                        <ul class="list-unstyled list-inline font-small">
+                            <li class="list-inline-item pr-2"><a href="{% url 'image' image_id=image.id %}"
+                                    class="white-text"><i class="far fa-comments pr-1"></i>Comments</a></li>
+                        </ul>
+                    </div>
+                </div><br>
+            </div>{% endfor %}
+        </div>
+    </center>
 </div>
 
 {%endblock%}
