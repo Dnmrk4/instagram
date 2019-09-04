@@ -1,14 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.core.urlresolvers import reverse
 # Create your models here.
 
+class followers(models.Model):
+
+    following= models.ForeignKey(User,related_name='who_follows')
+    follower=models.ForeignKey(User,related_name='who_is_followed')
 
 class Profile(models.Model):
     profile_photo = models.ImageField(upload_to='profilepics')
     bio = models.CharField(max_length=2000)
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    profile_follows = models.ManyToManyField("self",related_name='follows',symmetrical = False)
 
     def save_profile(self):
         self.save()
@@ -42,7 +46,7 @@ class Image(models.Model):
     image_name = models.CharField(max_length=100)
     image_caption = models.CharField(max_length=2000)
     post_date = models.DateTimeField(auto_now=True)
-    likes = models.BooleanField(default=False)
+    likes = models.ManyToManyField(User,related_name="likes",default=None)
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     
     class Meta:
@@ -54,6 +58,10 @@ class Image(models.Model):
     def save_image(self):
         self.save()
 
+    def total_likes(self):
+        '''Likes for images'''
+        return self.likes.count()
+
     @classmethod
     def get_allImages(cls):
         images = cls.objects.all()
@@ -64,6 +72,9 @@ class Image(models.Model):
     def get_image_id(cls, id):
         image = Image.objects.get(pk=id)
         return image
+
+    def get_like_url(self):
+        return reverse("image:like-toggle")
     
     @classmethod
     def get_profile_images(cls, profile):
